@@ -1,66 +1,58 @@
-(() => {
 
+(() => {
 
     // Resolver sin la triple condicional dentro del if
     // includes? arrays?
-    function isRedFruit( fruit: string ): boolean {
-        
-        if ( fruit === 'manzana' || fruit === 'cereza' || fruit === 'ciruela' ) {
-            return true;
-        } else {
-            return false;
-        }
+    function isRedFruit(fruit: string): boolean {
+        const redFruits = ['manzana', 'cereza', 'ciruela'];
+        return redFruits.includes(fruit);
     }
 
     // Simplificar esta función
     // switch? Object literal? validar posibles colores
-    function getFruitsByColor( color: string ): string[] {
+    function getFruitsByColor(color: string): string[] {
 
-        if ( color === 'red' ) {
-            return ['manzana','fresa'];
-        } else if ( color === 'yellow') {
-            return ['piña','banana'];
-        } else if ( color === 'purple') {
-            return ['moras','uvas']
-        } else {
+        const fruitsByColor: Record<string, string[]> = {
+            red: ['manzana', 'fresa'],
+            yellow: ['piña', 'banana'],
+            purple: ['moras', 'uvas']
+        };
+
+        if (!(color in fruitsByColor)) {
             throw Error('the color must be: red, yellow, purple');
         }
+
+        return fruitsByColor[color];
     }
 
     // Simplificar esta función
-    let isFirstStepWorking  = true;
+    let isFirstStepWorking = true;
     let isSecondStepWorking = true;
-    let isThirdStepWorking  = true;
+    let isThirdStepWorking = true;
     let isFourthStepWorking = true;
 
-    function workingSteps() {
-        if( isFirstStepWorking === true ) {
-            if( isSecondStepWorking === true ) {
-                if( isThirdStepWorking === true ) {
-                    if( isFourthStepWorking === true ) {
-                        return 'Working properly!';
-                    }
-                    else {
-                        return 'Fourth step broken.';
-                    }
-                }
-                else {
-                    return 'Third step broken.';
-                }
-            }
-            else {
-                return 'Second step broken.';
-            }
+    function workingSteps(): string {
+
+        const steps = [
+            { name: 'First', working: isFirstStepWorking },
+            { name: 'Second', working: isSecondStepWorking },
+            { name: 'Third', working: isThirdStepWorking },
+            { name: 'Fourth', working: isFourthStepWorking }
+        ];
+
+        const brokenStep = steps.find(step => !step.working);
+
+        if (brokenStep) {
+            return `${brokenStep.name} step broken.`;
         }
-        else {
-            return 'First step broken.';
-        }
+
+        return 'Working properly!';
     }
 
 
     // isRedFruit
     console.log({ isRedFruit: isRedFruit('cereza'), fruit: 'cereza' }); // true
-    console.log({ isRedFruit: isRedFruit('piña'), fruit: 'piña' }); // true
+    console.log({ isRedFruit: isRedFruit('piña'), fruit: 'piña' }); // false
 
     //getFruitsByColor
     console.log({ redFruits: getFruitsByColor('red') }); // ['manzana', 'fresa']
